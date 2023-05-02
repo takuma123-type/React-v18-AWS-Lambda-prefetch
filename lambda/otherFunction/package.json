@@ -1,0 +1,12 @@
+{
+  "name": "lambda-functions",
+  "version": "1.0.0",
+  "description": "AWS Lambda functions for fetchData and otherFunction",
+  "main": "index.js",
+  "scripts": {
+    "deploy": "zip -r lambda.zip * && aws lambda update-function-code --function-name YOUR_FUNCTION_NAME --zip-file fileb://lambda.zip"
+  },
+  "dependencies": {
+    "aws-sdk": "^2.1030.0"
+  }
+}
