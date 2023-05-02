@@ -1,8 +1,19 @@
-import React from "react";
-import usePrefetch from "../hooks/usePrefetch";
+import React, { useState, useEffect } from "react";
+import { fetchData, cacheData, getCachedData } from "../utils/dataCache";
 
 const CustomLink = ({ href, children }) => {
-  const { isPrefetching, setIsPrefetching } = usePrefetch(href);
+  const [isPrefetching, setIsPrefetching] = useState(false);
+
+  useEffect(() => {
+    if (isPrefetching) {
+      const cachedData = getCachedData(href);
+      if (!cachedData) {
+        fetchData(href).then((data) => {
+          cacheData(href, data);
+        });
+      }
+    }
+  }, [isPrefetching, href]);
 
   const handleMouseEnter = () => {
     setIsPrefetching(true);
